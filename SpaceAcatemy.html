@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cat's Space Acatemy</title>
+    <style>
+    body{
+        font-family: "Monaco", monospace;
+    }
+
+    .heading {
+        background-color: rgb(71, 47, 110);
+        color: white;
+        font-family: "Lucida Console", monospace;
+        padding: 5px 10px;
+        }
+    
+    button{
+        background-color: white;
+        text-color: black;
+        border-color: black;
+        border-radius: 5px;
+        padding: 5px 10px;
+        font-size: 15px;
+        margin: 5px;
+        cursor:pointer;
+        font-family: "Lucida Console", monospace;
+        }
+    
+    .added-to-cart{
+        background-color: rgb(71, 47, 110);
+        color: white;
+        font-family: "Lucida Console", monospace;
+        }
+
+    .todo-input-grid{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        column-gap: 10px;
+        row-gap: 0px;
+       
+    }
+
+    .subPrice{
+        display: grid;
+        grid-template-columns: 1.5fr 1fr;
+        column-gap: 10px;
+        row-gap: 0px;
+    }
+
+    .img{
+        width: 100%;
+    }
+    </style>
+</head>
+
+
+
+
+
+<body>
+
+<img src = "CatAcademyo.png" class = "img">
+
+<div class = "subPrice">
+<div>
+<p class = "heading">About Us</p> 
+<p> 
+All Aboard Cat’s Space Academy! Whether you're seeking help with math or science, we have all the courses you need. As well, there's a little secret, if you select the 6 pack (All Gr.12 Maths and Sciences), you will recieve a 20% discount on your overall purchase! Now click the buttons to select your courses, so I can take off with your money oops I mean to space!:)
+</p>    
+</div>
+ 
+<div>
+<p class = "heading" >My Very Cheap Tutoring Pricing:</p>
+<div class = "subPrice">
+<div>
+Grade 9 Courses<br/>Grade 10 Courses<br/>Grade 11 Courses<br/>Grade 12 Courses
+</div>
+<div>
+   $30/hr<br/>$40/hr<br/>$45/hr<br/>$50/hr
+</div>
+    
+</div>
+</div>
+
+</div>
+
+<div class = "todo-input-grid"> 
+<div><p class = "heading" >Math</p></div>
+<div><p class = "heading">Science</p></div>
+<div><p class = "heading">Cart</p></div>
+</div>
+
+
+<div class = "todo-input-grid">
+<div>
+<button onclick ="
+    toggleCartNY('Math 9', 30, this)
+    ">Math 9</button>
+<br/>
+<button onclick ="
+    toggleCartNY('Math 10', 40, this)
+    ">Math 10</button>
+<br/>
+<button onclick ="
+    toggleCartNY('Functions 11', 45, this)
+    ">Functions 11</button>
+<br/>
+<button onclick ="
+    toggleCartNY('Data Management 12', 50, this)
+    ">Data Management 12</button>
+<br/>
+<button onclick ="
+    toggleCartNY('Advanced Functions 12', 50, this)
+    ">Advanced Functions 12</button>
+<br/>
+<button onclick ="
+    toggleCartNY('Calculus and Vectors 12', 50, this)
+    ">Calculus and Vectors 12</button>
+</div>
+
+
+<div>
+<button onclick ="
+    toggleCartNY('Science 9', 30, this)
+    ">Science 9</button>
+<br/>
+<button onclick ="
+    toggleCartNY('Science 10', 40, this)
+    ">Science 10</button>
+<br/>
+<button onclick ="
+    toggleCartNY('Chemistry 11', 45, this)
+    ">Chemistry 11</button>
+<br/>
+<button onclick ="
+    toggleCartNY('Biology 11', 45, this)
+    ">Biology 11</button>
+<br/>
+<button onclick ="
+    toggleCartNY('Physics 11', 45, this)
+    ">Physics 11</button>
+<br/>
+<button onclick ="
+    toggleCartNY('Chemistry 12', 50, this)
+    ">Chemistry 12</button>
+<br/>
+<button onclick ="
+    toggleCartNY('Biology 12', 50, this)
+    ">Biology 12</button>
+<br/>
+<button onclick ="
+    toggleCartNY('Physics 12', 50, this)
+    ">Physics 12</button>
+</div>
+
+<div>
+<div class = "subPrice">    
+<div><p class = "js-subjects"></p></div>
+<div><p class = "js-prices"></p></div>
+</div>
+
+<p class = "js-20Discount" ></p>
+<p class = "js-subTotal" >Subtotal:</p>
+<p class = "js-Tax" >Tax (13%):</p>
+<p class = "js-Total" >Total:</p>
+<div>
+</div>
+
+
+
+
+    
+<script>
+        // Initialize an empty cart array
+        const cartNY = [];
+
+        /*
+        Function change colour of button and add clicked subject to cartNY
+        Parameters: subject of button pressed, price of subject, ID of button pressed
+        */
+        function toggleCartNY(subjectNY, priceNY, buttonNY) {
+            let subjectInCartNY = false;
+            for (let i = 0; i < cartNY.length; i++) {
+                if (cartNY[i].subjectNY === subjectNY) {
+                    subjectInCartNY = true;
+                }
+            }
+            if (subjectInCartNY === false) {
+                // Subject not in cart, add it and change button style
+                cartNY.push({subjectNY, priceNY });
+                buttonNY.classList.add("added-to-cart");
+            } 
+            else {
+                // Subject already in cart, remove it and change button style
+                for (let i = 0; i < cartNY.length; i++) {
+                    if (cartNY[i].subjectNY === subjectNY) {
+                        cartNY.splice(i, 1);
+                    }
+                }
+                buttonNY.classList.remove("added-to-cart");
+            }
+            console.log(cartNY);
+            updateCartDisplayNY();
+        }
+
+
+        /*
+        Function update list of selected subjects under cart heading
+        calculate subtotal, tax, discount, and total
+        */
+        function updateCartDisplayNY(){
+
+        //subheadings undercart
+        subjectDisplayNY = "< Subject >";
+        priceDisplayNY = "< Price >";
+
+        subtotalNY = 0; 
+
+        //take subjects and prices in cart and place into subjectDisplayNY and priceDisplayNY strings
+        for(let i = 0; i < cartNY.length; i++){
+            subtotalNY = subtotalNY + cartNY[i].priceNY;
+            subjectDisplayNY += ("<br/>" + cartNY[i].subjectNY);
+            priceDisplayNY += ("<br/>$" + cartNY[i].priceNY);
+        }
+
+        //update website with subjectDisplayNY and priceDisplayNY strings 
+        document.querySelector('.js-subjects').innerHTML= subjectDisplayNY; 
+        document.querySelector('.js-prices').innerHTML= priceDisplayNY; 
+
+        //if a course cost $50, place into comparePack6NY array
+        let comparePack6NY = []; 
+        for(let i = 0; i < cartNY.length; i++){
+            if(cartNY[i].priceNY === 50){
+                comparePack6NY.push(cartNY[i]);
+            }
+        }
+        console.log(comparePack6NY);
+
+        //if comparePack6NY array has 6 subjects, indicates all 6 Grade 12 Math and Science courses were taken
+        if(comparePack6NY.length === 6){
+            console.log("6 Pack Enabled");
+            discountNY = 0.8;
+            document.querySelector(".js-20Discount").innerHTML = "6 Pack Applied: 20% Discount!"; 
+        }
+        else{
+            console.log("No 6 pack");
+            discountNY = 1; 
+            document.querySelector(".js-20Discount").innerHTML = ""; 
+        }
+
+        //calculating subtotal, tax, total
+        subtotalNY = subtotalNY * discountNY; 
+        taxNY = ((subtotalNY * 100) * 0.13) / 100; 
+        totalNY = (subtotalNY) + taxNY;
+        //display subtotal, tax, total in console
+        console.log(subtotalNY, taxNY, totalNY);
+
+        //adding subtotal, tax, total to screen
+        document.querySelector(".js-subTotal").innerHTML = "Subtotal: $" + subtotalNY;
+        document.querySelector(".js-Tax").innerHTML = "Tax (13%): $ " + taxNY;
+        document.querySelector(".js-Total").innerHTML = "Total: $" + totalNY;
+            }
+</script>
+
+</body>
+</html>
+
+
